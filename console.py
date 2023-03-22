@@ -145,9 +145,7 @@ class HBNBCommand(cmd.Cmd):
 
         except SyntaxError:
             print("** class name missing **")
-        except KeyError:
-            print("** class doesn't exist **")
-       
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
@@ -358,6 +356,7 @@ class HBNBCommand(cmd.Cmd):
             return True
         except ValueError:
             return False
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
