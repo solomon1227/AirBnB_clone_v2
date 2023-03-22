@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+import shlex
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -113,47 +114,44 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
-        for a in args:
-            start_idx = a.find("=")
-            a = a[0: start_idx] + a[start_idx:].replace('_', ' ')
-            new_args.append(a)
+    def do_create(self, arg):
+        """Creates a new instance of a class"""
+        try:
+            if not arg:
+                raise SyntaxError()
+            arg_list = arg.split(" ")  # split cmd line into list
 
-        if new_args[0] in classes:
-            new_instance = classes[new_args[0]]()
-            new_dict = {}
-            for a in new_args:
-                if a != new_args[0]:
-                    new_list = a.split('=')
-                    new_dict[new_list[0]] = new_list[1]
+            if arg_list:  # if list not empty
+                cls_name = arg_list[0]  # extract class name
+            else:  # class name missing
+                raise SyntaxError()
 
-            for k, v in new_dict.items():
-                if v[0] == '"':
-                    v_list = shlex.split(v)
-                    new_dict[k] = v_list[0]
-                    setattr(new_instance, k, new_dict[k])
+            kwargs = {}
+
+            for pair in arg_list[1:]:
+                k, v = pair.split("=")
+                if self.is_int(v):
+                    kwargs[k] = int(v)
+                elif self.is_float(v):
+                    kwargs[k] = float(v)
                 else:
-                    try:
-                        if type(eval(v)).__name__ == 'int':
-                            v = eval(v)
-                    except:
-                        continue
-                    try:
-                        if type(eval(str(v))).__name__ == 'float':
-                            v = eval(v)
-                    except:
-                        continue
-                    setattr(new_instance, k, v)
-            new_instance.save()
-            print(new_instance.id)
-        else:
-            print("** class doesn't exist **")
-         
+                    v = v.replace('_', ' ')
+                    kwargs[k] = v.strip('"\'')
 
+            obj = self.classes[cls_name](**kwargs)
+            storage.new(obj)  # store new object
+            obj.save()  # save storage to file
+            print(obj.id)  # print id of created object class
+
+        except SyntaxError:
+            print("** class name missing **")
+        except KeyError:
+            print("** class doesn't exist **")
+       
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
-        print("[Usage]: create <className>\n")
+        print("[Usage]: create <Class name> <param 1> <param 2>...\n")
 
     def do_show(self, args):
         """ Method to show an individual object """
@@ -343,6 +341,23 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+    @staticmethod
+    def is_int(n):
+        """ checks if integer"""
+        try:
+            int(n)
+            return True
+        except ValueError:
+            return False
+
+    @staticmethod
+    def is_float(n):
+        try:
+            float(n)
+            return True
+        except ValueError:
+            return False
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
