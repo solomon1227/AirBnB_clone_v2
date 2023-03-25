@@ -65,12 +65,3 @@ class FileStorage:
                 key_list_to_delete.append(key)
         for key in key_list_to_delete:
             self.__objects.pop(key)
-
-
-
-
-
-
-
-
- 
