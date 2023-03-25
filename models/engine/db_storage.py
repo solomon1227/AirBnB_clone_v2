@@ -27,8 +27,8 @@ class DBStorage:
         password = os.getenv("HBNB_MYSQL_PWD", default=None)
         host = os.getenv("HBNB_MYSQL_HOST", default=None)
         db = os.getenv("HBNB_MYSQL_DB", default=None)
-:
         HBNB_ENV = os.getenv('HBNB_ENV')
+
         url = "mysql+mysqldb://{}:{}/{}/{}".format(user, password, host, db)
         self.__engine = create_engine(url, pool_pre_ping=True)
 
@@ -37,7 +37,7 @@ class DBStorage:
 
     def all(self, cls=None):
         """query on the current database session"""
-        if cls is not None: 
+        if cls is not None:
             cls_session = {}
             for key, value in self.__session.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
