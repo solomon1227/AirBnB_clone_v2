@@ -43,20 +43,24 @@ class DBStorage:
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     cls_session[key] = value
             return cls_session
-        return FileStorage.__session
+        return DBStorage.__session
 
     def new(self, obj):
         """Adds the object to the current database session"""
-        self.__session.add(obj)
+        obj_key = obj.__class__.__name__ + '.' + obj.id
+        self.all().update({obj_key:obj})
 
     def save(self):
         """Saves storage dictionary to file"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None """
+        """delete from the current database session obj if not None"""
         if obj is not None:
-            self.__session.delete(obj)
+            obj_key = obj.__class__.__name__ + '.' + obj.id
+            for key in self.__session.keys():
+                if obj_key == key:
+                    del self.__session[key]
 
     def reload(self):
         """create the current database session (self.__session)

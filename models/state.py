@@ -11,6 +11,7 @@ class State(BaseModel, Base):
     """Representation of state """
     if models.storage_type == "db":
         __tablename__ = 'states'
+        id = Column(String(60), nullable=False, primary_key=True)
         name = Column(String(128), nullable=False)
         cities = relationship("City", backref="state")
     else:
