@@ -24,4 +24,3 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     city_list.append(city)
             return city_list
-City.state = relationship('State', back_populates='cities')
