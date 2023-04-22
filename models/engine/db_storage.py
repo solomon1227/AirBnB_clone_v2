@@ -29,7 +29,7 @@ class DBStorage:
         db = os.getenv("HBNB_MYSQL_DB", default=None)
         HBNB_ENV = os.getenv('HBNB_ENV')
 
-        url = "mysql+mysqldb://{}:{}/{}/{}".format(user, password, host, db)
+        url = "mysql+mysqldb://{}:{}@{}/{}".format(user, password, host, db)
         self.__engine = create_engine(url, pool_pre_ping=True)
 
         if HBNB_ENV == "test":
@@ -47,8 +47,7 @@ class DBStorage:
 
     def new(self, obj):
         """Adds the object to the current database session"""
-        obj_key = obj.__class__.__name__ + '.' + obj.id
-        self.all().update({obj_key:obj})
+        self.__session.add(obj)
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -57,20 +56,16 @@ class DBStorage:
     def delete(self, obj=None):
         """delete from the current database session obj if not None"""
         if obj is not None:
-            obj_key = obj.__class__.__name__ + '.' + obj.id
-            for key in self.__session.keys():
-                if obj_key == key:
-                    del self.__session[key]
+            self.__session.delete(obj)
 
     def reload(self):
         """create the current database session (self.__session)
         from the engine (self.__engine)"""
 
         Base.metadata.create_all(self.__engine)
-
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session
+        self.__session = Session()
 
     def close(self):
         """call remove() method on the private session attribute"""

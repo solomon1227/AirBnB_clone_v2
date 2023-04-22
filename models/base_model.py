@@ -16,13 +16,13 @@ else:
 class BaseModel:
     """A base class for all hbnb models"""
 
-    def __init__(self, *args, **kwargs):
-        if models.storage_type == 'db':
-            id = Column(String(60), nullable=False, primary_key=True)
-            created_at = Column(DateTime, default=datetime.utcnow)
-            updated_at = Column(DateTime, default=datetime.utcnow)
+    if models.storage_type == 'db':
+        id = Column(String(60), nullable=False, primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow)
+        updated_at = Column(DateTime, default=datetime.utcnow)
 
-        else:
+    else:
+        def __init__(self, *args, **kwargs):
             """Instantiation of base model class
             Args:
                 args: it won't be used
