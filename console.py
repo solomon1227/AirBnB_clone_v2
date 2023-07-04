@@ -129,14 +129,14 @@ class HBNBCommand(cmd.Cmd):
             kwargs = {}
 
             for pair in arg_list[1:]:
-                k, v = pair.split("=")
-                if self.is_int(v):
-                    kwargs[k] = int(v)
-                elif self.is_float(v):
-                    kwargs[k] = float(v)
+                key, value = pair.split("=")
+                if self.is_int(value):
+                    kwargs[key] = int(value)
+                elif self.is_float(value):
+                    kwargs[key] = float(value)
                 else:
-                    v = v.replace('_', ' ')
-                    kwargs[k] = v.strip('"\'')
+                    value = value.replace('_', ' ')
+                    kwargs[key] = value.strip('"\'')
 
             obj = HBNBCommand.classes[cls_name](**kwargs)
             storage.new(obj)  # store new object
@@ -226,12 +226,12 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+            for key, value in storage._FileStorage__objects.items():
+                if key.split('.')[0] == args:
+                    print_list.append(str(value))
         else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
+            for key, value in storage._FileStorage__objects.items():
+                print_list.append(str(value))
 
         print(print_list)
 
@@ -243,8 +243,8 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
-            if args == k.split('.')[0]:
+        for key, value in storage._FileStorage__objects.items():
+            if args == key.split('.')[0]:
                 count += 1
         print(count)
 
