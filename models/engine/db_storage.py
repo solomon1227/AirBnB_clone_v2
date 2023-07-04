@@ -23,10 +23,10 @@ class DBStorage:
 
     def __init__(self):
         """create the engine (self.__engine)"""
-        user = os.getenv("HBNB_MYSQL_USER", default=None)
-        password = os.getenv("HBNB_MYSQL_PWD", default=None)
-        host = os.getenv("HBNB_MYSQL_HOST", default=None)
-        db = os.getenv("HBNB_MYSQL_DB", default=None)
+        user = os.getenv("HBNB_MYSQL_USER")
+        password = os.getenv("HBNB_MYSQL_PWD")
+        host = os.getenv("HBNB_MYSQL_HOST")
+        db = os.getenv("HBNB_MYSQL_DB")
         HBNB_ENV = os.getenv('HBNB_ENV')
 
         url = "mysql+mysqldb://{}:{}@{}/{}".format(user, password, host, db)
