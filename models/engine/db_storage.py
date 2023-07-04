@@ -42,8 +42,8 @@ class DBStorage:
             for key, value in self.__session.items():
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     cls_session[key] = value
-            return cls_session
-        return DBStorage.__session
+            return (cls_session)
+        return (DBStorage.__session)
 
     def new(self, obj):
         """Adds the object to the current database session"""
@@ -66,10 +66,6 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session()
-
-    def close(self):
-        """call remove() method on the private session attribute"""
-        self.__session.remove()
 
     def close(self):
         """call remove() method on the private session attribute"""
