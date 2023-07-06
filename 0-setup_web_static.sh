@@ -2,7 +2,7 @@
 
 # Install and configure nginx web server
 apt-get update
-#apt-get install -y nginx
+apt-get install -y nginx
 
 #prepare the directory
 mkdir -p /data/web_static/shared/
@@ -17,8 +17,7 @@ ln -sf /data/web_static/releases/test /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 
 # Edit Nginx configuration file
-sed -i '/^server {\n\t/a location \/hbnb_static {\n\t\talias \/data\/web_static\/current\/;\n\t }' /etc/nginx/sites-available/default
-
+sed -i '/^server {/a\\tlocation \/hbnb_static { \n\t\talias \/data\/web_static\/current\/;\n\t }\n' /etc/nginx/sites-available/default
 # Restart Nginx
 service nginx restart
 
