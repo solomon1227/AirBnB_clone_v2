@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Fabric script based on the file 1-pack_web_static.py that distributes an
+archive to the web servers
+"""
 
 
 from fabric.api import env, run, put
@@ -9,6 +13,7 @@ from os import path, environ
 env.hosts = ['54.237.25.186', '100.25.21.22']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
+
 
 def do_deploy(archive_path):
     '''Deploys an archive to the web servers.'''
