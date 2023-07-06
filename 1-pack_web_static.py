@@ -2,6 +2,7 @@
 from fabric.api import local
 from datetime import datetime
 
+
 def do_pack():
     """Pack the web static folder in to .tgz file format"""
     try:
