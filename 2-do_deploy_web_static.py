@@ -7,8 +7,8 @@ from os import path, environ
 
 # Set web server IP addresses
 env.hosts = ['54.237.25.186', '100.25.21.22']
-env.user = environ.get('USERNAME', 'ubuntu')
-env.key_filename = environ.get('SSH_KEY_PATH', '/.ssh/id_rsa')
+env.user = 'ubuntu'
+env.key_filename = '~/.ssh/id_rsa'
 
 def do_deploy(archive_path):
     '''Deploys an archive to the web servers.'''
@@ -29,8 +29,6 @@ def do_deploy(archive_path):
         run("rm /tmp/{}".format(archive_filename))
         run("rm -f /data/web_static/current")
         run("ln -s {} /data/web_static/current".format(release_folder))
-        print("New version deployed successfully!")
         return True
     except Exception as e:
-        print("Deployment failed: {}".format(e))
         return False
