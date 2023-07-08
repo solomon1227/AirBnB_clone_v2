@@ -23,6 +23,7 @@ def do_deploy(archive_path):
         run("mkdir -p {}".format(release_folder))
         run("tar -xzf /tmp/{} -C {}".format(filename, release_folder))
         run("rm /tmp/{}".format(filename))
+        run('mv -u {}/web_static/* {}'.format(release_folder, release_folder))
         run("rm -f /data/web_static/current")
         run("ln -s {} /data/web_static/current".format(release_folder))
         print("A new version deployed")
