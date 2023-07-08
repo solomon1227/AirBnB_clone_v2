@@ -5,12 +5,13 @@ Packing a web_static to deploy
 
 
 from fabric.api import local
-from datetime import datetimei
+from datetime import datetime
 from os.path import isdir
 
 
 def do_pack():
     """generates a tgz archive"""
+
     try:
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
         if isdir("versions") is False:
