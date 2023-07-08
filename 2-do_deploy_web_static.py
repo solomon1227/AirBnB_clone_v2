@@ -18,14 +18,16 @@ def do_deploy(archive_path):
     try:
         put(archive_path, "/tmp/")
         filename = path.basename(archive_path)
-        filename_without_extension = path.splitext(archive_filename)[0]
+        filename_without_extension = path.splitext(filename)[0]
         release_folder = "/data/web_static/releases/{}".format(filename_without_extension)
         run("mkdir -p {}".format(release_folder))
-        run("tar -xzf /tmp/{} -C {}".format(archive_filename, release_folder))
-        run("rm /tmp/{}".format(archive_filename))
+        run("tar -xzf /tmp/{} -C {}".format(filename, release_folder))
+        run("rm /tmp/{}".format(filename))
         run("rm -f /data/web_static/current")
         run("ln -s {} /data/web_static/current".format(release_folder))
+        print("A new version deployed")
         return True
     except Exception as e:
+        print("Failed: {}".format(e))
         return False
 
