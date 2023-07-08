@@ -14,8 +14,7 @@ def do_pack():
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
         local("mkdir -p versions")
         archive_name = "versions/web_static_" + current_time + ".tgz"
-        command = 'tar -czvf {} web_static && echo "web_static packed: {} -> $(du -b {})Bytes"'.format(archive_name, archive_name, archive_name)
-        local(command)
+        local("tar -cvzf {} web_static".format(archive_name))
         return (archive_name)
     except Exception as e:
         return None
