@@ -29,8 +29,8 @@ def do_deploy(archive_path):
     try:
         put(archive_path, "/tmp/")
         filename = path.basename(archive_path)
-        filename_without_extension = path.splitext(filename)[0]
-        release_folder = "/data/web_static/releases/{}".format(filename_without_extension)
+        file_withoutext = path.splitext(filename)[0]
+        release_folder = "/data/web_static/releases/{}".format(file_withoutext)
         run("mkdir -p {}".format(release_folder))
         run("tar -xzf /tmp/{} -C {}".format(filename, release_folder))
         run("rm /tmp/{}".format(filename))
