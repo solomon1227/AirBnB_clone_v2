@@ -1,15 +1,22 @@
 #!/usr/bin/python3
+"""
+Packing a web_static to deploy
+"""
+
+
 from fabric.api import local
-from datetime import datetime
+from datetime import datetimei
+from os.path import isdir
 
 
 def do_pack():
-    """Pack the web static folder in to .tgz file format"""
+    """generates a tgz archive"""
     try:
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        local("mkdir -p versions")
-        archive_name = "versions/web_static_" + current_time + ".tgz"
-        local("tar -cvzf {} web_static".format(archive_name))
-        return (archive_name)
-    except Exception as e:
+        if isdir("versions") is False:
+            local("mkdir versions")
+        file_name = "versions/web_static_{}.tgz".format(current_time)
+        local("tar -cvzf {} web_static".format(file_name))
+        return file_name
+    except:
         return None
