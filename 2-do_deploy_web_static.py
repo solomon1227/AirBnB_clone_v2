@@ -31,4 +31,3 @@ def do_deploy(archive_path):
     except Exception as e:
         print("Failed: {}".format(e))
         return False
-

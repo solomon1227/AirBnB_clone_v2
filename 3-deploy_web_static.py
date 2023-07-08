@@ -21,6 +21,7 @@ def do_pack():
     except Exception as e:
         return None
 
+
 def do_deploy(archive_path):
     '''Deploys an archive to the web servers.'''
 
@@ -42,6 +43,7 @@ def do_deploy(archive_path):
     except Exception as e:
         print("Failed: {}".format(e))
         return False
+
 
 def deploy():
     """creates and distributes an archive to the web servers"""
