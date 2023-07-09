@@ -32,7 +32,7 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         filename = path.basename(archive_path)
         file_withoutext = path.splitext(filename)[0]
-        run("chown -hR '$USER':'$USER' /data/")
+        run("chown -hR $USER:$USER /data/")
         release_folder = "/data/web_static/releases/{}".format(file_withoutext)
         run("mkdir -p {}".format(release_folder))
         run("tar -xzf /tmp/{} -C {}".format(filename, release_folder))
