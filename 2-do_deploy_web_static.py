@@ -17,8 +17,6 @@ def do_deploy(archive_path):
         return False
     try:
         run("mkdir -p /data/web_static/releases/")
-        run("mkdir -p /data/web_static/shared")
-        run("sed -i '/^server {/a\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default")
         put(archive_path, "/tmp/")
         filename = path.basename(archive_path)
         file_withoutext = path.splitext(filename)[0]
