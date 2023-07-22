@@ -16,6 +16,7 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
     try:
+        run("mkdir -p /data/web_static/releases/")
         put(archive_path, "/tmp/")
         filename = path.basename(archive_path)
         file_withoutext = path.splitext(filename)[0]
