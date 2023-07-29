@@ -16,7 +16,7 @@ class FileStorage:
                 if cls == value.__class__ or cls == value.__class__.__name__:
                     cls_obj[key] = value
             return cls_obj
-        return FileStorage.__objects # if cls is none return all class object
+        return FileStorage.__objects  # if cls is none return all class object
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -67,3 +67,7 @@ class FileStorage:
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+
+    def close(self):
+        """Deserilize the json file to objects"""
+        self.reload()
