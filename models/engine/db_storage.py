@@ -15,6 +15,9 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 
 class DBStorage:
     """The database storage engine"""
@@ -35,15 +38,17 @@ class DBStorage:
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
 
+
     def all(self, cls=None):
         """query on the current database session"""
-        if cls is not None:
-            cls_session = {}
-            for key, value in self.__session.items():
-                if cls == value.__class__ or cls == value.__class__.__name__:
-                    cls_session[key] = value
-            return (cls_session)
-        return (DBStorage.__session)
+        new_dict = {}
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    new_dict[key] = obj
+        return (new_dict)
 
     def new(self, obj):
         """Adds the object to the current database session"""
@@ -65,7 +70,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
-        self.__session = Session()
+        self.__session = Session
 
     def close(self):
         """call remove() method on the private session attribute"""
