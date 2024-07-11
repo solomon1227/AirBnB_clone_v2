@@ -16,6 +16,7 @@ def do_pack():
     try:
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
         local("mkdir -p versions")
+        local("chown -hR $USER:$USER versions")
         archive_name = "versions/web_static_" + current_time + ".tgz"
         local("tar -cvzf {} web_static".format(archive_name))
         return (archive_name)
