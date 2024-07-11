@@ -27,10 +27,5 @@ ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -hR ubuntu:ubuntu /data/
 
 #Update the serever to serve /hbnb_static/
-sed -i '/server_name/a \
-    \    location /hbnb_static {\
-    \        alias /data/web_static/current/;\
-    \        autoindex on;\
-    \    }' /etc/nginx/sites-available/default
-
+sed -i '/^server {/a\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
 service nginx restart
