@@ -5,10 +5,24 @@ archive to the web servers
 """
 
 
-from fabric.api import env, run, put
+from fabric.api import env, run, put, local
 from os import path, environ
-env.hosts = ['54.237.25.186', '100.25.21.22']
+from datetime import datetime
 
+env.hosts = ['100.26.236.93', '54.160.114.138']
+env.user = 'ubuntu'
+
+def do_pack():
+    """Pack the web static folder in to .tgz file format"""
+    try:
+        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
+        local("mkdir -p versions")
+        local("chown -hR $USER:$USER versions")
+        archive_name = "versions/web_static_" + current_time + ".tgz"
+        local("tar -cvzf {} web_static".format(archive_name))
+        return (archive_name)
+    except Exception as e:
+        return None
 
 def do_deploy(archive_path):
     '''Deploys an archive to the web servers.'''
