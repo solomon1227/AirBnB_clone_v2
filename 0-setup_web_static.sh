@@ -28,7 +28,7 @@ chown -hR ubuntu:ubuntu /data/
 
 #Update the serever to serve /hbnb_static/
 sed -i '/server_name/a \
-    \    location /hbnb_static/ {\
+    \    location /hbnb_static {\
     \        alias /data/web_static/current/;\
     \        autoindex on;\
     \    }' /etc/nginx/sites-available/default
