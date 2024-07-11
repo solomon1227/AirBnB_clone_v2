@@ -4,7 +4,7 @@ script based on the file 2-do_deploy_web_static.py that creates and
 distributes an archive to the web servers
 """
 
-from fabric.api import env, local, put, run
+from fabric.api import env, local, put, run, lcd, cd
 from datetime import datetime
 from os import path
 env.hosts = ['54.237.25.186', '100.25.21.22']
@@ -58,7 +58,7 @@ def do_clean(number=0):
     if number == 0 or number == 1:
         num = 2  # Keep only the most recent and second most recent versions
     else:
-        num = number + 1
+        num = int(number) + 1
 
     with lcd("versions"):
         local("ls -t | tail -n +{} | xargs -I {{}} rm -- {{}}".format(num))
