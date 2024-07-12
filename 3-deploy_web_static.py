@@ -9,7 +9,7 @@ from datetime import datetime
 from os import path
 
 env.hosts = ['100.26.236.93', '54.160.114.138']
-env.user = 'ubuntu'
+
 
 def do_pack():
     """Pack the web static folder in to .tgz file format"""
@@ -38,8 +38,9 @@ def do_deploy(archive_path):
         run("mkdir -p {}".format(release_folder))
         run("tar -xzf /tmp/{} -C {}".format(filename, release_folder))
         run("rm /tmp/{}".format(filename))
-        run('mv -u {}/web_static/* {}'.format(release_folder, release_folder))
-        run("rm -f /data/web_static/current")
+        run('mv {}/web_static/* {}'.format(release_folder, release_folder))
+        run('rm -rf {}/web_static'.format(release_folder))
+        run("rm -rf /data/web_static/current")
         run("ln -s {} /data/web_static/current".format(release_folder))
         print("A new version deployed")
         return True
