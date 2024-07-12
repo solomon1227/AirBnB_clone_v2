@@ -15,8 +15,8 @@ def do_pack():
     """Pack the web static folder in to .tgz file format"""
     try:
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        local("mkdir -p versions")
-        local("chown -hR $USER:$USER versions")
+        if path.isdir("versions") is False:
+            local("mkdir -p versions")
         archive_name = "versions/web_static_" + current_time + ".tgz"
         local("tar -cvzf {} web_static".format(archive_name))
         return (archive_name)
