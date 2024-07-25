@@ -1,32 +1,32 @@
 #!/usr/bin/python3
-"""
-0-hello_route module - host a simple app on local host using flask
-"""
-from flask import Flask
-from markupsafe import escape
+'''Start flask web application'''
 
+from flask import Flask
 
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
 def hello():
-    """display Hello HBNB"""
+    '''Start minimal Flask web application:'''
+
     return 'Hello HBNB!'
 
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    """Display HBNB"""
+    '''Routing function for /hbnb'''
+
     return 'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def hbnb_user(text):
-    """variable ussage in flask"""
+def c(text):
+    '''Display C followed by text variable, with _ replaced by Space'''
+
     text = text.replace('_', ' ')
-    return f'C {escape(text)}'
+    return f'C {text}'
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port=5000)
