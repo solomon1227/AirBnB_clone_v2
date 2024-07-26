@@ -2,8 +2,8 @@
 '''Start flask web application for AirBNB clone'''
 
 from flask import Flask, render_template
-from models import *
 from models import storage
+from models.state import State
 
 
 app = Flask(__name__)
@@ -13,12 +13,12 @@ app = Flask(__name__)
 def states_list():
     '''Start minimal Flask web application:'''
 
-    states = sorted(list(storage.all("State").values()), key=lambda x: x.name)
+    states = storage.all("State").values()
     return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
-def remove_session(exception):
+def remove_session(exception=None):
     storage.close()
 
 
