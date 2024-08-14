@@ -13,7 +13,7 @@ app = Flask(__name__)
 def states_list():
     '''Start minimal Flask web application:'''
 
-    states = storage.all("State").values()
+    states = sorted(storage.all("State").values(), key=lambda x: x.name)
     return render_template('7-states_list.html', states=states)
 
 
