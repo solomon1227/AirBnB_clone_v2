@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+from datetime import datetime
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table, \
+    DateTime
 from sqlalchemy.orm import relationship
 import models
 
@@ -22,6 +24,9 @@ class Place(BaseModel, Base):
     """Representation of Place """
     if models.storage_type == 'db':
         __tablename__ = 'places'
+        id = Column(String(60), nullable=False, primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+        updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
