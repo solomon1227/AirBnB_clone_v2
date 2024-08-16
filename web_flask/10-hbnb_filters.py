@@ -4,6 +4,9 @@
 """
 from flask import Flask, render_template
 from models import storage
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
 import os
 app = Flask(__name__)
 
@@ -11,6 +14,11 @@ app = Flask(__name__)
 @app.route('/hbnb_filters', strict_slashes=False)
 def filters():
     """Method to filter places and states"""
+    states = sorted(storage.all('State').values(), key=lambda x:x.name)
+    cities = sorted(storage.all('City').values(), key=lambda x:x.name)
+    amenities = sorted(storage.all('Amenity').values(), key=lambda x:x.name)
+    return render_template('10-hbnb_filters.html', states=states, 
+                           cities=cities, amenities=amenities)
 
 
 @app.teardown_appcontext
