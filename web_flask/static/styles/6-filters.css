@@ -74,7 +74,7 @@
 
 .container .filters .popover {
 	max-height: 300px;
-	overflow: scroll;
+	overflow-y: scroll;
 	display: none;
 	list-style-type: none;
 	background-color: #FAFAFA;
