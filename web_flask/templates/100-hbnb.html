@@ -69,7 +69,11 @@
 							<p>{{ place.number_bathrooms | safe }}</p>
 						</div>
 					</div>
-					<div class="user"><b>Owner</b>: John Lennon</div>
+					{% for user in users %}
+    					{% if user.id == place.user_id %}
+        				<div class="user"><b>Owner</b>: {{ user.first_name }} {{ user.last_name }}</div>
+    					{% endif %}
+					{% endfor %}
 					<div class="description">
                     {{ place.description | safe }}
                     </div>

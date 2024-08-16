@@ -7,6 +7,7 @@ from models import storage
 from models.state import State
 from models.city import City
 from models.place import Place
+from models.user import User
 from models.amenity import Amenity
 import os
 app = Flask(__name__)
@@ -19,9 +20,10 @@ def hbnb():
     cities = sorted(storage.all('City').values(), key=lambda x:x.name)
     places = sorted(storage.all('Place').values(), key=lambda x:x.name)
     amenities = sorted(storage.all('Amenity').values(), key=lambda x:x.name)
+    users = storage.all('User').values()
     return render_template('100-hbnb.html', states=states, 
                            cities=cities, places=places,
-                           amenities=amenities)
+                           amenities=amenities, users=users)
 
 
 @app.teardown_appcontext
